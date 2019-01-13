@@ -1,0 +1,14 @@
+# KattisScraper
+Scrapes some data from open.kattis.org of a user's completed problems.
+
+**WIP**
+
+Currently outputs data to a csv file formatted:
+
+    problem name, problem link, problem difficulty, submission date, submission language, submission code
+    
+Limitation: works as of 12 Jan 2019, if site changes too much it may break
+
+Others:
+
+* only grabs latest successful submissions regardless of different submissions
