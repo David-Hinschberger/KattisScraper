@@ -12,3 +12,4 @@ Limitation: works as of 12 Jan 2019, if site changes too much it may break
 Others:
 
 * only grabs latest successful submissions regardless of different submissions
+* doesn't have much in terms of error checking, so probably prone to crashing such as invalid login, networking issues, etc.

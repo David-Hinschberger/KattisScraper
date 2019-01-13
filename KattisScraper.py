@@ -4,6 +4,8 @@ from bs4 import BeautifulSoup
 LOGIN_URL = "https://open.kattis.com/login/email"
 BASEURL = "https://open.kattis.com"
 URL = "https://open.kattis.com/problems?show_solved=on&show_tried=off&show_untried=off"
+
+
 # EMAIL = "EMAIL_ADDRESS"
 # PASSWORD = "PASSWORD"
 
@@ -29,7 +31,6 @@ def main():
     soup = BeautifulSoup(result.content, 'lxml')
     # profile link is /users/$username
     profile = soup.find(href=re.compile("/users/.+")).attrs['href']
-
 
     # Save all listed problems
     problem_links = []
@@ -60,24 +61,26 @@ def main():
         tblBody = soup.find("tbody")
 
         for row in tblBody.find_all('tr'):
-            #latest accepted solution
+            # latest accepted solution
             accepted_row = row.find(class_='accepted')
             if accepted_row:
-                submission_date.append(accepted_row.parent.find(attrs={"data-type":"time"}).string)
-                submission_lang.append(accepted_row.parent.find(attrs={"data-type":"lang"}).string)
+                submission_date.append(accepted_row.parent.find(attrs={"data-type": "time"}).string)
+                submission_lang.append(accepted_row.parent.find(attrs={"data-type": "lang"}).string)
                 submission_page = BASEURL + accepted_row.parent.find(class_="submission_id").a.attrs["href"]
                 result = session_requests.get(submission_page)
                 soup = BeautifulSoup(result.content, 'lxml')
                 submission_code.append(soup.find(class_="source-highlight").text)
                 break
 
-    print(len(problem_names))
-
     csvFile = open("Kattis.csv", "w", encoding='utf-8')
     with csvFile:
         writer = csv.writer(csvFile)
         for i in range(0, len(problem_names)):
-            writer.writerow([problem_names[i], problem_links[i], problem_difficulties[i], submission_date[i], submission_lang[i], submission_code[i]])
+            writer.writerow(
+                [problem_names[i], problem_links[i], problem_difficulties[i], submission_date[i], submission_lang[i],
+                 submission_code[i]])
+
+    print("Done! Check the Kattis.csv")
 
 if __name__ == "__main__":
     main()
