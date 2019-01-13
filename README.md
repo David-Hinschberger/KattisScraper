@@ -13,3 +13,4 @@ Others:
 
 * only grabs latest successful submissions regardless of different submissions
 * doesn't have much in terms of error checking, so probably prone to crashing such as invalid login, networking issues, etc.
+* takes a while to collect all the data, usually in navigating pages (takes about 2.5 minutes with ~130 solutions)
