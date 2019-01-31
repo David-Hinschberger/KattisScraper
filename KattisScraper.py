@@ -1,6 +1,7 @@
 import csv
 import re
 import requests
+import sys
 from bs4 import BeautifulSoup
 
 LOGIN_URL = "https://open.kattis.com/login/email"
@@ -8,12 +9,13 @@ BASEURL = "https://open.kattis.com"
 URL = "https://open.kattis.com/problems?show_solved=on&show_tried=off&show_untried=off"
 
 
-# EMAIL = "EMAIL_ADDRESS"
-# PASSWORD = "PASSWORD"
-
 def main():
-    EMAIL = input("Email Address: ")
-    PASSWORD = input("Password: ")
+    if len(sys.argv) == 3:
+        EMAIL = sys.argv[1]
+        PASSWORD = sys.argv[2]
+    else:
+        EMAIL = input("Email Address: ")
+        PASSWORD = input("Password: ")
 
     session_requests = requests.session()
     # Get csrf token
