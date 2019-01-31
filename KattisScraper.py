@@ -1,4 +1,6 @@
-import requests, re, csv
+import csv
+import re
+import requests
 from bs4 import BeautifulSoup
 
 LOGIN_URL = "https://open.kattis.com/login/email"
@@ -58,9 +60,9 @@ def main():
         problem = BASEURL + profile + "/submissions" + link[9:]
         result = session_requests.get(problem)
         soup = BeautifulSoup(result.content, 'lxml')
-        tblBody = soup.find("tbody")
+        tbl_body = soup.find("tbody")
 
-        for row in tblBody.find_all('tr'):
+        for row in tbl_body.find_all('tr'):
             # latest accepted solution
             accepted_row = row.find(class_='accepted')
             if accepted_row:
@@ -72,15 +74,15 @@ def main():
                 submission_code.append(soup.find(class_="source-highlight").text)
                 break
 
-    csvFile = open("Kattis.csv", "w", encoding='utf-8')
-    with csvFile:
-        writer = csv.writer(csvFile)
+    with open("Kattis.csv", "w", newline='', encoding='utf-8') as csv_file:
+        writer = csv.writer(csv_file)
         for i in range(0, len(problem_names)):
             writer.writerow(
                 [problem_names[i], problem_links[i], problem_difficulties[i], submission_date[i], submission_lang[i],
                  submission_code[i]])
 
     print("Done! Check the Kattis.csv")
+
 
 if __name__ == "__main__":
     main()
