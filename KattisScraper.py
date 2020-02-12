@@ -68,9 +68,9 @@ def main():
             # latest accepted solution
             accepted_row = row.find(class_='accepted')
             if accepted_row:
-                submission_date.append(accepted_row.parent.find(attrs={"data-type": "time"}).string)
-                submission_lang.append(accepted_row.parent.find(attrs={"data-type": "lang"}).string)
-                submission_page = BASEURL + accepted_row.parent.find(class_="submission_id").a.attrs["href"]
+                submission_date.append(accepted_row.parent.parent.find(attrs={"data-type": "time"}).string)
+                submission_lang.append(accepted_row.parent.parent.find(attrs={"data-type": "lang"}).string)
+                submission_page = BASEURL + accepted_row.parent.parent.find(class_="submission_id").a.attrs["href"]
                 result = session_requests.get(submission_page)
                 soup = BeautifulSoup(result.content, 'lxml')
                 submission_code.append(soup.find(class_="source-highlight").text)
